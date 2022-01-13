@@ -57,7 +57,9 @@ def plot_cumulative_pnl(
 ) -> matplotlib.pyplot.figure:
     df_pnl["cumulative_pnl"] = (df_pnl["pnl"] + 1).cumprod()
     plt.plot(df_pnl.date, df_pnl.cumulative_pnl, color="red", label="System PnL")
-    plt.plot(df.index, df.pnl + 1, color="blue", label="Buy and Hold PnL")
+    plt.plot(
+        df.index, (df["pnl"] + 1).cumprod(), color="blue", label="Buy and Hold PnL"
+    )
 
     plt.legend(loc="upper left")
     plt.show()

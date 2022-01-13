@@ -18,7 +18,7 @@ ASSET = "SPY"
 
 def main() -> None:
     df = download_data(ASSET)
-    df["pnl"] = (df.open.pct_change() + 1).cumprod() - 1
+    df["pnl"] = df.open.pct_change()
 
     df_pnl = get_pnl(
         df,
