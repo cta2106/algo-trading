@@ -13,12 +13,12 @@ logger.setLevel(logging.INFO)
 
 
 config = get_config()
-ASSET = "TSLA"
+ASSET = "SPY"
 
 
 def main() -> None:
     df = download_data(ASSET)
-    df["pnl"] = (df.open.pct_change() + 1).cumprod()
+    df["pnl"] = (df.open.pct_change() + 1).cumprod() - 1
 
     df_pnl = get_pnl(
         df,
@@ -26,6 +26,7 @@ def main() -> None:
         exit_condition=config.exit_condition,
         entry_time_in_minutes=config.entry_time_in_minutes,
     )
+
     df_pnl.to_csv(directories.pnl_data / PNL_FILENAME, index=False)
 
     plot_cumulative_pnl(df_pnl, df)
