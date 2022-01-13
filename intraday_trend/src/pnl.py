@@ -52,8 +52,12 @@ def get_pnl(
     return pd.DataFrame({"date": unique_dates, "pnl": pnl})
 
 
-def plot_cumulative_pnl(df_pnl: pd.DataFrame) -> matplotlib.pyplot.figure:
+def plot_cumulative_pnl(
+    df_pnl: pd.DataFrame, df: pd.DataFrame
+) -> matplotlib.pyplot.figure:
     df_pnl["cumulative_pnl"] = (df_pnl["pnl"] + 1).cumprod()
-    plt.plot(df_pnl.date, df_pnl.cumulative_pnl, color="red", label="Strategy PnL")
+    plt.plot(df_pnl.date, df_pnl.cumulative_pnl, color="red", label="System PnL")
+    plt.plot(df.index, df.pnl, color="blue", label="Buy and Hold PnL")
+
     plt.legend(loc="upper left")
     plt.show()

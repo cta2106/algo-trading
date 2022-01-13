@@ -6,7 +6,7 @@ import yaml
 
 from intraday_trend.src.config.directories import directories
 
-_BASE_CONFIG_FILENAME = 'config.yml'
+_BASE_CONFIG_FILENAME = "config.yml"
 
 
 @dataclass(frozen=True)
@@ -27,4 +27,3 @@ def get_config() -> Config:
 def _load_config_file(path) -> Dict:
     cfg = yaml.load(Path(path).read_text(), Loader=yaml.FullLoader)
     return cfg
-

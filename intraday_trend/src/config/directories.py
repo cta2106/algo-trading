@@ -7,15 +7,14 @@ logger = logging.getLogger(__name__)
 
 
 class _Directories:
-
     def __init__(self):
         self.project = Path(__file__).parents[2].resolve()
         logger.info(f"Setting up directories at {self.project}")
-        self.config = self.project / 'config'
-        self.package = self.project / 'src'
-        self.data = self.package / 'data'
-        self.price_data = self.data / 'prices'
-        self.pnl_data = self.data / 'pnl'
+        self.config = self.project / "config"
+        self.package = self.project / "src"
+        self.data = self.package / "data"
+        self.price_data = self.data / "prices"
+        self.pnl_data = self.data / "pnl"
 
         for dir_path in vars(self).values():
             try:

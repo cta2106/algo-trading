@@ -13,11 +13,13 @@ logger.setLevel(logging.INFO)
 
 
 config = get_config()
-ASSET = "GOOGL"
+ASSET = "TSLA"
 
 
 def main() -> None:
     df = download_data(ASSET)
+    df["pnl"] = (df.open.pct_change() + 1).cumprod()
+
     df_pnl = get_pnl(
         df,
         entry_condition=config.entry_condition,
@@ -26,10 +28,12 @@ def main() -> None:
     )
     df_pnl.to_csv(directories.pnl_data / PNL_FILENAME, index=False)
 
-    plot_cumulative_pnl(df_pnl)
+    plot_cumulative_pnl(df_pnl, df)
 
-    sr = sharpe_ratio(df_pnl)
-    logger.info(f"Shape Ratio for this Strategy: {sr}")
+    sr_s = sharpe_ratio(df_pnl)
+    sr_bh = sharpe_ratio(df)
+
+    logger.info(f"System Shape Ratio: {sr_s} \n Buy and Hold Sharpe Ratio: {sr_bh}")
 
 
 if __name__ == "__main__":
