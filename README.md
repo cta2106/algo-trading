@@ -15,10 +15,16 @@ You will need a Tiingo API key to be able to run this code.
 
 ## Running Instructions
 - Create a virtual environment 
-- To install project requirements, run the command `pip install -r requirements.txt`
+- Install projet requirements by running the command `pip install -r requirements.txt`
 - Navigate to the `src` folder and run the following commands:
   - `export TIINGO_API_KEY = <YOUR_API_KEY>`
   - `python main.py`
 
 You can set your asset ticker directly in `main.py` and if you so choose, modify the strategy parameters in `intraday_trend/config/config.yaml`.
 
+## Disclaimer
+
+
+NOT INVESTMENT ADVICE
+
+This code is posted for informational purposes only. Nothing contained in this codebase constitutes a solicitation, recommendation, endorsement, or offer by the author to buy or sell any securities utilizing the algorithm implemented herewith.
