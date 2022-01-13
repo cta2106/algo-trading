@@ -1,0 +1,2 @@
+class DirectoryError(Exception):
+    pass

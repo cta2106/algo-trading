@@ -1,0 +1,5 @@
+entry_condition : 0.02
+exit_condition : 0.01
+entry_time_in_minutes : 120
+start_date_str : "2020-01-01"
+end_date_str : "2022-01-12"
