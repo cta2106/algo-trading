@@ -7,6 +7,8 @@ This repository enables the backtesting of a momentum / trend-following intraday
   - The asset has lost 1% in value (stop-loss)
   - The trading day ended without any of the above conditions being met
 
+![alt text](https://github.com/cta2106/algo-trading/blob/master/mrna_cumulative_returns.png)
+
 It is inspired from Algovibes' video [here](https://www.youtube.com/watch?v=BhOdgrxWi5c).
 
 ## Data Source
