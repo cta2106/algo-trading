@@ -5,3 +5,4 @@ params:
     entry_time_in_minutes: 120
     entry_condition: 0.02
     exit_condition: 0.01
+  buy_late_sell_early:

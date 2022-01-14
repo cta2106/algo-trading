@@ -18,7 +18,12 @@ class TrendFollowingParams(StrategyParams):
     exit_condition: float
 
 
-def trend_following(df_day: pd.DataFrame, params: TrendFollowingParams) -> pd.DataFrame:
+@dataclass()
+class BuyLateSellEarlyParams(StrategyParams):
+    pass
+
+
+def trend_following(df_day: pd.DataFrame, params: TrendFollowingParams) -> float:
     return_at_entry = (
         df_day.iloc[params.entry_time_in_minutes]["open"] / df_day.iloc[0]["open"] - 1
     )
@@ -38,3 +43,10 @@ def trend_following(df_day: pd.DataFrame, params: TrendFollowingParams) -> pd.Da
         spread = exit_price - buy_price
         pnl = spread / buy_price
     return pnl
+
+
+def buy_late_sell_early(df_day: pd.DataFrame, params: BuyLateSellEarlyParams) -> float:
+    exit_price = df_day.iloc[0]["open"]
+    buy_price = df_day.iloc[-1]["close"]
+    spread = exit_price - buy_price
+    return spread / buy_price

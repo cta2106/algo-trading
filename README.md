@@ -1,15 +1,21 @@
-# Intraday trend following strategy
+# Intraday algorithmic trading
 
-This repository enables the backtesting of a momentum / trend-following intraday strategy that consists of:
-- Purchasing an asset 2 hours into the trading day if its price has increased by 2% or more from open
-- Exiting the trade if one of the following conditions is met:
-  - The asset has gained 1% in value
-  - The asset has lost 1% in value (stop-loss)
-  - The trading day ended without any of the above conditions being met
+This repository enables the backtesting of two algorithmic trading strategies:
 
-![alt text](https://github.com/cta2106/algo-trading/blob/master/mrna_cumulative_returns.png)
+1. First, a momentum / trend-following intraday strategy that consists of:
+   - Purchasing an asset 2 hours into the trading day if its price has increased by 2% or more from open
+   - Exiting the trade if one of the following conditions is met:
+     - The asset has gained 1% in value
+     - The asset has lost 1% in value (stop-loss)
+     - The trading day ended without any of the above conditions being met
 
-It is inspired from Algovibes' video [here](https://www.youtube.com/watch?v=BhOdgrxWi5c).
+  ![alt text](https://github.com/cta2106/algo-trading/blob/master/mrna_cumulative_returns.png)
+
+  This strategy is inspired from Algovibes' video [here](https://www.youtube.com/watch?v=BhOdgrxWi5c).
+
+2. Second, a simple buy late / sell early strategy, by which the algorithm enters a trade at close and exits it the next morning at open.
+
+3. ![alt text](https://github.com/cta2106/algo-trading/blob/master/pton_cumulative_returns.png)
 
 ## Data Source
 Intraday financial data at the minute granularity can be acquired free of charge using the [Tiingo](https://www.tiingo.com/) API.
@@ -29,4 +35,4 @@ You can set your asset ticker directly in `main.py` and if you so choose, modify
 
 NOT INVESTMENT ADVICE
 
-This code is posted for informational purposes only. Nothing contained in this codebase constitutes a solicitation, recommendation, endorsement, or offer by the author to buy or sell any securities utilizing the algorithm implemented herewith.
+This code is posted for informational purposes only. Nothing contained in this codebase constitutes a solicitation, recommendation, endorsement, or offer by the author to buy or sell any securities utilizing the algorithms implemented herewith.
