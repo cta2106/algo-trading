@@ -18,7 +18,6 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 config = get_config()
-ASSET = "PTON"
 
 STRATEGY_FACTORY = {
     "trend_following": (trend_following, TrendFollowingParams),
@@ -26,12 +25,12 @@ STRATEGY_FACTORY = {
 }
 
 
-def main(strategy) -> None:
-    df = download_data(ASSET)
+def run_main(strategy_name: str, asset: str) -> None:
+    df = download_data(asset)
     df_daily = df.resample("D").median().dropna()
     df_daily["pnl"] = df_daily["close"].pct_change().fillna(0)
 
-    strategy, params = STRATEGY_FACTORY.get(strategy)
+    strategy, params = STRATEGY_FACTORY.get(strategy_name)
     params_dict = config.params.get(strategy.__name__)
     strategy_params = params(**params_dict) if params_dict else None
 
@@ -51,4 +50,7 @@ def main(strategy) -> None:
 
 
 if __name__ == "__main__":
-    main("buy_late_sell_early")
+    ASSET = "PTON"
+    STRATEGY_NAME = "trend_following"
+
+    run_main(STRATEGY_NAME, ASSET)
