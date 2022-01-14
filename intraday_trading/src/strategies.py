@@ -18,7 +18,7 @@ class TrendFollowingParams(StrategyParams):
     exit_condition: float
 
 
-@dataclass()
+@dataclass
 class BuyLateSellEarlyParams(StrategyParams):
     pass
 
