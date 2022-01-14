@@ -41,14 +41,18 @@ def run_main(strategy_name: str, asset: str) -> None:
     )
     df_pnl.to_csv(directories.pnl_data / PNL_FILENAME, index=False)
 
-    plot_cumulative_pnl(df_pnl, df_daily, asset=ASSET)
-    logger.info(
-        f"System Shape Ratio: {sharpe_ratio(df_pnl)} \n Buy and Hold Sharpe Ratio: {sharpe_ratio(df_daily)}"
+    metrics = {
+        "Buy and Hold Sharpe Ratio": sharpe_ratio(df_daily),
+        "System Sharpe Ratio": sharpe_ratio(df_pnl),
+    }
+
+    plot_cumulative_pnl(
+        df_pnl, df_daily, asset=ASSET, metrics=metrics, strategy_name=strategy_name
     )
 
 
 if __name__ == "__main__":
-    ASSET = "BABA"
-    STRATEGY_NAME = "buy_late_sell_early"
+    ASSET = "MRNA"
+    STRATEGY_NAME = "trend_following"
 
     run_main(STRATEGY_NAME, ASSET)

@@ -1,8 +1,8 @@
 import datetime as dt
-from typing import Callable
+from typing import Callable, Dict
 
 import pandas as pd
-import plotly
+import plotly.graph_objects as go
 import plotly.express as px
 
 from intraday_trading.src.constants import DATE_FMT
@@ -34,11 +34,19 @@ def get_pnl(
 
 
 def plot_cumulative_pnl(
-    df_pnl: pd.DataFrame, df_daily: pd.DataFrame, asset: str
-) -> plotly.graph_objects.Figure:
+    df_pnl: pd.DataFrame,
+    df_daily: pd.DataFrame,
+    asset: str,
+    metrics: Dict[str, float],
+    strategy_name: str,
+) -> None:
+    Y_ANNOTATION = 0.7
+    Y_PAD = 0.05  # distance between metrics
+    X_ANNOTATION = 1.27
+
     df_plot = pd.DataFrame(
         {
-            "System PnL": df_pnl.cumulative_pnl.values,
+            f"{strategy_name.replace('_', ' ').title()} PnL": df_pnl.cumulative_pnl.values,
             "Buy and Hold PnL": (df_daily["pnl"] + 1).cumprod().fillna(1).values,
         },
         index=df_daily.index,
@@ -53,6 +61,22 @@ def plot_cumulative_pnl(
         yaxis_title="Cumulative Returns",
         legend_title="Strategy",
         font=dict(family="Courier New, monospace", size=18, color="RebeccaPurple"),
+        margin=dict(t=150, r=400),
     )
+
+    y_annotation = Y_ANNOTATION
+    for metric_name, metric_value in metrics.items():
+        fig.add_annotation(
+            go.layout.Annotation(
+                text="\n".join([f"{metric_name}: {metric_value:.2f}"]),
+                align="left",
+                showarrow=False,
+                xref="paper",
+                yref="paper",
+                x=X_ANNOTATION,
+                y=y_annotation,
+            )
+        )
+        y_annotation -= Y_PAD
 
     fig.show()
