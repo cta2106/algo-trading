@@ -11,9 +11,7 @@ _BASE_CONFIG_FILENAME = "config.yml"
 
 @dataclass(frozen=True)
 class Config:
-    entry_condition: float
-    exit_condition: float
-    entry_time_in_minutes: int
+    params: Dict
     start_date_str: str
     end_date_str: str
 

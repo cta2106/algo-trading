@@ -6,30 +6,34 @@ from intraday_trend.src.constants import PNL_FILENAME
 from intraday_trend.src.etl import download_data
 from intraday_trend.src.metrics import sharpe_ratio
 from intraday_trend.src.pnl import get_pnl, plot_cumulative_pnl
+from intraday_trend.src.strategies import TrendFollowingParams, trend_following
 
 logging.basicConfig()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-
 config = get_config()
-ASSET = "SPY"
+ASSET = "MRNA"
+
+STRATEGY_FACTORY = {"trend_following": (trend_following, TrendFollowingParams)}
 
 
-def main() -> None:
+def main(strategy) -> None:
     df = download_data(ASSET)
     df["pnl"] = df.open.pct_change()
 
+    strategy, params = STRATEGY_FACTORY.get(strategy)
+    strategy_params = params(**(config.params.get(strategy.__name__)))
+
     df_pnl = get_pnl(
         df,
-        entry_condition=config.entry_condition,
-        exit_condition=config.exit_condition,
-        entry_time_in_minutes=config.entry_time_in_minutes,
+        strategy,
+        strategy_params,
     )
 
     df_pnl.to_csv(directories.pnl_data / PNL_FILENAME, index=False)
 
-    plot_cumulative_pnl(df_pnl, df)
+    plot_cumulative_pnl(df_pnl, df, asset=ASSET)
 
     sr_s = sharpe_ratio(df_pnl)
     sr_bh = sharpe_ratio(df)
@@ -38,4 +42,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    main("trend_following")

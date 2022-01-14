@@ -1,5 +1,7 @@
-entry_condition : 0.02
-exit_condition : 0.01
-entry_time_in_minutes : 120
-start_date_str : "2020-01-01"
+start_date_str : "2021-11-01"
 end_date_str : "2022-01-12"
+params:
+  trend_following:
+    entry_time_in_minutes: 120
+    entry_condition: 0.02
+    exit_condition: 0.01
