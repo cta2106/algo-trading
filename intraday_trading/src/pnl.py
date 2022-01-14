@@ -41,13 +41,16 @@ def plot_cumulative_pnl(
     strategy_name: str,
 ) -> None:
     Y_ANNOTATION = 0.7
-    Y_PAD = 0.05  # distance between metrics
-    X_ANNOTATION = 1.27
+    Y_PAD = 0.06  # distance between metrics
+    X_ANNOTATION = 1.02
+    TOP_PADDING = 150
+    RIGHT_PADDING = 430
+    TITLE_TO_METRIC_PADDING = 1.35
 
     df_plot = pd.DataFrame(
         {
-            f"{strategy_name.replace('_', ' ').title()} PnL": df_pnl.cumulative_pnl.values,
             "Buy and Hold PnL": (df_daily["pnl"] + 1).cumprod().fillna(1).values,
+            f"{strategy_name.replace('_', ' ').title()} PnL": df_pnl.cumulative_pnl.values,
         },
         index=df_daily.index,
     )
@@ -61,7 +64,21 @@ def plot_cumulative_pnl(
         yaxis_title="Cumulative Returns",
         legend_title="Strategy",
         font=dict(family="Courier New, monospace", size=18, color="RebeccaPurple"),
-        margin=dict(t=150, r=400),
+        margin=dict(t=TOP_PADDING, r=RIGHT_PADDING),
+    )
+
+    fig.add_annotation(
+        go.layout.Annotation(
+            text="Metrics",
+            align="center",
+            showarrow=False,
+            xref="paper",
+            xanchor="left",
+            yref="paper",
+            x=X_ANNOTATION,
+            y=Y_ANNOTATION + Y_PAD / TITLE_TO_METRIC_PADDING,
+            font=dict(family="Courier New, monospace", size=22, color="RebeccaPurple"),
+        )
     )
 
     y_annotation = Y_ANNOTATION
@@ -69,9 +86,10 @@ def plot_cumulative_pnl(
         fig.add_annotation(
             go.layout.Annotation(
                 text="\n".join([f"{metric_name}: {metric_value:.2f}"]),
-                align="left",
+                align="center",
                 showarrow=False,
                 xref="paper",
+                xanchor="left",
                 yref="paper",
                 x=X_ANNOTATION,
                 y=y_annotation,

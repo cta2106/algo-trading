@@ -43,7 +43,7 @@ def run_main(strategy_name: str, asset: str) -> None:
 
     metrics = {
         "Buy and Hold Sharpe Ratio": sharpe_ratio(df_daily),
-        "System Sharpe Ratio": sharpe_ratio(df_pnl),
+        f"{strategy_name.replace('_', ' ').title()} Sharpe Ratio": sharpe_ratio(df_pnl),
     }
 
     plot_cumulative_pnl(
