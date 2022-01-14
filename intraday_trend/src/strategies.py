@@ -1,6 +1,6 @@
+import datetime as dt
 from abc import abstractmethod
 from dataclasses import dataclass
-import datetime as dt
 
 import pandas as pd
 
