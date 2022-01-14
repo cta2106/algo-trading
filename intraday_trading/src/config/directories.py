@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
 
-from intraday_trend.src.exceptions import DirectoryError
+from intraday_trading.src.exceptions import DirectoryError
 
 logger = logging.getLogger(__name__)
 

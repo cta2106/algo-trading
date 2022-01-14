@@ -5,8 +5,8 @@ import matplotlib
 import pandas as pd
 from matplotlib import pyplot as plt
 
-from intraday_trend.src.constants import DATE_FMT
-from intraday_trend.src.strategies import StrategyParams
+from intraday_trading.src.constants import DATE_FMT
+from intraday_trading.src.strategies import StrategyParams
 
 
 def _daily_pnl(

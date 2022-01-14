@@ -4,7 +4,7 @@ from typing import Dict
 
 import yaml
 
-from intraday_trend.src.config.directories import directories
+from intraday_trading.src.config.directories import directories
 
 _BASE_CONFIG_FILENAME = "config.yml"
 

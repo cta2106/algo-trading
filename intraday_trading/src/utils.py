@@ -3,7 +3,7 @@ from typing import List, Tuple
 
 import pandas as pd
 
-from intraday_trend.src.constants import (
+from intraday_trading.src.constants import (
     DATE_FMT,
     TIINGO_ROW_LIMIT,
     MINUTES_PER_TRADING_DAY,

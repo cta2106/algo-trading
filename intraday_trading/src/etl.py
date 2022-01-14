@@ -6,10 +6,10 @@ from typing import Dict
 import pandas as pd
 from tiingo import TiingoClient
 
-from intraday_trend.src.config.config import get_config
-from intraday_trend.src.config.directories import directories
-from intraday_trend.src.constants import DATE_FMT
-from intraday_trend.src.utils import get_date_slices
+from intraday_trading.src.config.config import get_config
+from intraday_trading.src.config.directories import directories
+from intraday_trading.src.constants import DATE_FMT
+from intraday_trading.src.utils import get_date_slices
 
 logging.basicConfig()
 logger = logging.getLogger(__name__)
