@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 config = get_config()
-ASSET = "MSFT"
+ASSET = "PTON"
 
 STRATEGY_FACTORY = {
     "trend_following": (trend_following, TrendFollowingParams),
@@ -28,7 +28,8 @@ STRATEGY_FACTORY = {
 
 def main(strategy) -> None:
     df = download_data(ASSET)
-    df["pnl"] = df.open.pct_change()
+    df_daily = df.resample("D").median().dropna()
+    df_daily["pnl"] = df_daily["close"].pct_change().fillna(0)
 
     strategy, params = STRATEGY_FACTORY.get(strategy)
     params_dict = config.params.get(strategy.__name__)
@@ -41,10 +42,10 @@ def main(strategy) -> None:
     )
     df_pnl.to_csv(directories.pnl_data / PNL_FILENAME, index=False)
 
-    plot_cumulative_pnl(df_pnl, df, asset=ASSET)
+    plot_cumulative_pnl(df_pnl, df_daily, asset=ASSET)
 
     sr_s = sharpe_ratio(df_pnl)
-    sr_bh = sharpe_ratio(df)
+    sr_bh = sharpe_ratio(df_daily)
 
     logger.info(f"System Shape Ratio: {sr_s} \n Buy and Hold Sharpe Ratio: {sr_bh}")
 

@@ -1,9 +1,9 @@
 import datetime as dt
 from typing import Callable
 
-import matplotlib
 import pandas as pd
-from matplotlib import pyplot as plt
+import plotly
+import plotly.express as px
 
 from intraday_trading.src.constants import DATE_FMT
 from intraday_trading.src.strategies import StrategyParams
@@ -26,18 +26,31 @@ def get_pnl(
         df_day = df.loc[date_str]
         daily_pnl = _daily_pnl(df_day, strategy, params)
         pnl.append(daily_pnl)
-    return pd.DataFrame({"date": unique_dates, "pnl": pnl})
+    df_pnl = pd.DataFrame({"date": unique_dates, "pnl": pnl})
+    df_pnl["cumulative_pnl"] = (df_pnl["pnl"] + 1).cumprod()
+    return df_pnl
 
 
 def plot_cumulative_pnl(
-    df_pnl: pd.DataFrame, df: pd.DataFrame, asset: str
-) -> matplotlib.pyplot.figure:
-    df_pnl["cumulative_pnl"] = (df_pnl["pnl"] + 1).cumprod()
-    plt.title(f"{asset} Cumulative Returns")
-    plt.plot(df_pnl.date, df_pnl.cumulative_pnl, color="red", label="System PnL")
-    plt.plot(
-        df.index, (df["pnl"] + 1).cumprod(), color="blue", label="Buy and Hold PnL"
+    df_pnl: pd.DataFrame, df_daily: pd.DataFrame, asset: str
+) -> plotly.graph_objects.Figure:
+    df_plot = pd.DataFrame(
+        {
+            "System PnL": df_pnl.cumulative_pnl.values,
+            "Buy and Hold PnL": (df_daily["pnl"] + 1).cumprod().values,
+        },
+        index=df_daily.index,
+    )
+    fig = px.line(
+        df_plot,
+        title=f"{asset} Cumulative Returns for {df_daily.index[0].strftime('%B %d, %Y')} - {df_daily.index[-1].strftime('%B %d, %Y')}",
     )
 
-    plt.legend(loc="upper left")
-    plt.show()
+    fig.update_layout(
+        xaxis_title="Date",
+        yaxis_title="Cumulative Returns",
+        legend_title="Strategy",
+        font=dict(family="Courier New, monospace", size=18, color="RebeccaPurple"),
+    )
+
+    fig.show()
