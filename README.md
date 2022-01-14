@@ -15,7 +15,7 @@ This repository enables the backtesting of two algorithmic trading strategies:
 
 2. Second, a simple buy late / sell early strategy, by which the algorithm enters a trade at close and exits it the next morning at open.
 
-3. ![alt text](https://github.com/cta2106/algo-trading/blob/master/pton_cumulative_returns.png)
+![alt text](https://github.com/cta2106/algo-trading/blob/master/pton_cumulative_returns.png)
 
 ## Data Source
 Intraday financial data at the minute granularity can be acquired free of charge using the [Tiingo](https://www.tiingo.com/) API.
