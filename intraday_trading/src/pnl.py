@@ -11,7 +11,7 @@ from intraday_trading.src.strategies import StrategyParams
 
 def _daily_pnl(
     df_day: pd.DataFrame, strategy: Callable, params: StrategyParams
-) -> pd.DataFrame:
+) -> float:
     pnl = strategy(df_day, params)
     return pnl
 
@@ -26,7 +26,9 @@ def get_pnl(
         df_day = df.loc[date_str]
         daily_pnl = _daily_pnl(df_day, strategy, params)
         pnl.append(daily_pnl)
-    df_pnl = pd.DataFrame({"date": unique_dates, "pnl": pnl})
+    df_pnl = pd.DataFrame(
+        {"date": unique_dates, "pnl": [0] + pnl[1:]}
+    )  # index first pnl value at 0, cumulative_pnl at 1
     df_pnl["cumulative_pnl"] = (df_pnl["pnl"] + 1).cumprod()
     return df_pnl
 
@@ -37,7 +39,7 @@ def plot_cumulative_pnl(
     df_plot = pd.DataFrame(
         {
             "System PnL": df_pnl.cumulative_pnl.values,
-            "Buy and Hold PnL": (df_daily["pnl"] + 1).cumprod().values,
+            "Buy and Hold PnL": (df_daily["pnl"] + 1).cumprod().fillna(1).values,
         },
         index=df_daily.index,
     )

@@ -28,7 +28,7 @@ STRATEGY_FACTORY = {
 def run_main(strategy_name: str, asset: str) -> None:
     df = download_data(asset)
     df_daily = df.resample("D").median().dropna()
-    df_daily["pnl"] = df_daily["close"].pct_change().fillna(0)
+    df_daily["pnl"] = df_daily["close"].pct_change()
 
     strategy, params = STRATEGY_FACTORY.get(strategy_name)
     params_dict = config.params.get(strategy.__name__)
@@ -42,15 +42,13 @@ def run_main(strategy_name: str, asset: str) -> None:
     df_pnl.to_csv(directories.pnl_data / PNL_FILENAME, index=False)
 
     plot_cumulative_pnl(df_pnl, df_daily, asset=ASSET)
-
-    sr_s = sharpe_ratio(df_pnl)
-    sr_bh = sharpe_ratio(df_daily)
-
-    logger.info(f"System Shape Ratio: {sr_s} \n Buy and Hold Sharpe Ratio: {sr_bh}")
+    logger.info(
+        f"System Shape Ratio: {sharpe_ratio(df_pnl)} \n Buy and Hold Sharpe Ratio: {sharpe_ratio(df_daily)}"
+    )
 
 
 if __name__ == "__main__":
-    ASSET = "PTON"
-    STRATEGY_NAME = "trend_following"
+    ASSET = "BABA"
+    STRATEGY_NAME = "buy_late_sell_early"
 
     run_main(STRATEGY_NAME, ASSET)
