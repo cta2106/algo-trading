@@ -11,7 +11,7 @@ This repository enables the backtesting of two algorithmic trading strategies:
 
   ![alt text](https://github.com/cta2106/algo-trading/blob/master/mrna_cumulative_returns.png)
 
-  This strategy is inspired from Algovibes' video [here](https://www.youtube.com/watch?v=BhOdgrxWi5c).
+  This strategy is inspired by Algovibes' video [here](https://www.youtube.com/watch?v=BhOdgrxWi5c).
 
 2. Second, a simple buy late / sell early strategy, by which the algorithm enters a trade at close and exits it the next morning at open.
 
