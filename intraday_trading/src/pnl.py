@@ -41,10 +41,10 @@ def plot_cumulative_pnl(
     strategy_name: str,
 ) -> None:
     Y_ANNOTATION = 0.7
-    Y_PAD = 0.06  # distance between metrics
+    Y_PAD = 0.08  # distance between metrics
     X_ANNOTATION = 1.02
     TOP_PADDING = 150
-    RIGHT_PADDING = 430
+    RIGHT_PADDING = 450
     TITLE_TO_METRIC_PADDING = 1.35
 
     df_plot = pd.DataFrame(
