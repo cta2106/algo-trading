@@ -2,8 +2,8 @@ import datetime as dt
 from typing import Callable, Dict
 
 import pandas as pd
-import plotly.graph_objects as go
 import plotly.express as px
+import plotly.graph_objects as go
 
 from intraday_trading.src.constants import DATE_FMT
 from intraday_trading.src.strategies import StrategyParams

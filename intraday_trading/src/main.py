@@ -52,7 +52,7 @@ def run_main(strategy_name: str, asset: str) -> None:
 
 
 if __name__ == "__main__":
-    ASSET = "MRNA"
-    STRATEGY_NAME = "trend_following"
+    ASSET = "HON"
+    STRATEGY_NAME = "buy_late_sell_early"
 
     run_main(STRATEGY_NAME, ASSET)
